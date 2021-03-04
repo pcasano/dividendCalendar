@@ -5,6 +5,7 @@
  */
 package com.dividendcalendar;
 
+import com.graphics.Gui;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.FileNotFoundException;
@@ -68,7 +69,7 @@ public class NewMain{
         int numberOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         
-        Gui gui = new Gui();
+        Gui gui = new Gui(numberOfDays);
         gui.setVisible(true);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
