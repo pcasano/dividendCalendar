@@ -5,6 +5,8 @@
  */
 package com.dividendcalendar;
 
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,7 +28,7 @@ import yahoofinance.YahooFinance;
  *
  * @author pablo
  */
-public class NewMain {
+public class NewMain{
 
     /**
      * @param args the command line arguments
@@ -63,16 +67,15 @@ public class NewMain {
 
         int numberOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        JFrame frame = new JFrame();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setUndecorated(true); 
-        frame.setVisible(true);
         
+        Gui gui = new Gui();
+        gui.setVisible(true);
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        int frameWidht = frame.getWidth();
-        int frameHight = frame.getHeight();
+
         
-        
+
+               
         
     }
     
