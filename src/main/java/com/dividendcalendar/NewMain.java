@@ -70,8 +70,9 @@ public class NewMain{
 
         
         Gui gui = new Gui(numberOfDays);
-        gui.setVisible(true);
-        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gui.runGui();
+//        gui.setVisible(true);
+//        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 
         
