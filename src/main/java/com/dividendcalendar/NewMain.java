@@ -38,41 +38,35 @@ public class NewMain{
      */
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         
+        JSONParser parser = new JSONParser();
+        Object object = parser.parse(new FileReader("src\\main\\ressources\\companies.json"));
+        JSONObject jsonObject = (JSONObject)object;      
+        JSONArray companies = (JSONArray)jsonObject.get("companies");
         
+        List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
+        Stock stock;
+        for(Object objectCompany:companies){
+            stock = YahooFinance.get(objectCompany.toString());
+            listOfCompaniesInPortfolio.add(new Company(stock));
+        }
         
-        
-
-        
-//        JSONParser parser = new JSONParser();
-//        Object object = parser.parse(new FileReader("src\\main\\ressources\\companies.json"));
-//        JSONObject jsonObject = (JSONObject)object;      
-//        JSONArray companies = (JSONArray)jsonObject.get("companies");
-//        
-//        List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
-//        Stock stock;
-//        for(Object objectCompany:companies){
-//            stock = YahooFinance.get(objectCompany.toString());
-//            listOfCompaniesInPortfolio.add(new Company(stock));
-//        }
-//        
         Calendar calendar = Calendar.getInstance(Locale.GERMANY);
         int currentMonth = calendar.get(Calendar.MONTH);
-//        
-//        List<Company> listCompaniesForThisMonth = new ArrayList<>();
-//        for(Company company:listOfCompaniesInPortfolio){
-//            if(company.getDividendPaymentDate().get(Calendar.MONTH) == currentMonth){
-//                listCompaniesForThisMonth.add(company);
-//            }
-//        }
+        
+        List<Company> listCompaniesForThisMonth = new ArrayList<>();
+        for(Company company:listOfCompaniesInPortfolio){
+            if(company.getDividendPaymentDate().get(Calendar.MONTH) == currentMonth){
+                listCompaniesForThisMonth.add(company);
+            }
+        }
 
-
-        int numberOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         
-        Gui gui = new Gui(numberOfDays);
+
+        
+        Gui gui = new Gui(calendar, listCompaniesForThisMonth);
         gui.runGui();
-//        gui.setVisible(true);
-//        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         
 
         
