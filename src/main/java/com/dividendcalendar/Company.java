@@ -18,12 +18,18 @@ public class Company {
         this.companyName = stock.getName();
         this.dividendPaymentDate = stock.getDividend().getPayDate();
         this.dayOfMonth = stock.getDividend().getPayDate().get(Calendar.DAY_OF_MONTH);
+        this.imagePath = "src\\main\\ressources\\images\\" + getTicker() + ".png";
     }
     
     private final String companyName;
     private final String ticker;
     private final Calendar dividendPaymentDate;
     private final int dayOfMonth;
+    private final String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
 
     public String getCompanyName() {
         return companyName;
