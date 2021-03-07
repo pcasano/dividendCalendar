@@ -25,7 +25,7 @@ public class Company {
         this.companyName = stock.getName();
         this.dividendPaymentDate = stock.getDividend().getPayDate();
         this.dayOfMonth = stock.getDividend().getPayDate().get(Calendar.DAY_OF_MONTH);
-        this.imagePath = "src\\main\\ressources\\images\\" + getTicker() + ".png";  
+        this.imagePath = "src\\main\\ressources\\images\\" + this.ticker + ".png";  
         BufferedImage img = ImageIO.read(new File(this.imagePath));
         ImageIcon icon = new ImageIcon(img);        
         this.label = new JLabel(icon);         
