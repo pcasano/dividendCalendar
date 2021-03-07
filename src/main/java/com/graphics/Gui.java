@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -38,7 +40,7 @@ import javax.swing.JTabbedPane;
  *
  * @author pablo
  */
-public class Gui{
+public class Gui implements ActionListener{
     
     public Gui(Calendar calendar, List<Company> listCompaniesForThisMonth) {
         this.numberOfButtons = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -47,6 +49,7 @@ public class Gui{
     } 
     
     private Calendar calendar;
+    private JFrame frame;
     private JPanel tableAndCalendarPanel;
     private JPanel mainPanel;
     private JPanel calendarPanel;
@@ -57,7 +60,7 @@ public class Gui{
     
     
     public void runGui() throws IOException{
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setTitle("RBM Test Application");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);       
         createMainPanel(numberOfButtons);
@@ -98,6 +101,7 @@ public class Gui{
         List<JButton> listOfButtons = new ArrayList<>();
         for(int i=0;i<numberOfButtons;i++){
             button = new JButton(Integer.toString(i + 1)); 
+            button.addActionListener(this);
             if(getListOfDividendDays(listCompaniesForThisMonth).contains(i + 1)){
                 button.setBackground(Color.green);
             }            
@@ -164,27 +168,42 @@ public class Gui{
         double numberOfRowsDouble = listCompaniesForThisMonth.size()/4;
         int numberOfRowsInteger = (int)numberOfRowsDouble;      
         imagePanel.setLayout(new GridLayout(numberOfRowsInteger, 4, 0, 0));  
-        
-
-        
-        
         for(Company company:listCompaniesForThisMonth){
-        BufferedImage img = ImageIO.read(new File(company.getImagePath()));
-        ImageIcon icon = new ImageIcon(img);
-        
+            JLabel label = company.getLabel();            
+            imagePanel.add(label);
+            }              
+        }
 
-        JLabel label = new JLabel(icon);   
-        imagePanel.add(label);
-        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
         
-//        for(int i=0;i<8;i++){
-//        BufferedImage img = ImageIO.read(new File("src\\main\\ressources\\images\\IBM.png"));
-//        ImageIcon icon = new ImageIcon(img);
-//        
-//
-//        JLabel label = new JLabel(icon);  
-                    
+        try {
+            Company c = listCompaniesForThisMonth.get(0);
+            imagePanel.remove(c.getLabel());
+            mainPanel.revalidate();
+            mainPanel.repaint();
+            
+
+            
+//        double numberOfRowsDouble = listCompaniesForThisMonth.size()/4;
+//        int numberOfRowsInteger = (int)numberOfRowsDouble;
+//        imagePanel.setLayout(new GridLayout(numberOfRowsInteger, 4, 0, 0));  
+//        listCompaniesForThisMonth.forEach((company) -> {
+//            BufferedImage img;
+//            try {
+//                img = ImageIO.read(new File(company.getImagePath()));
+//                ImageIcon icon = new ImageIcon(img);
+//                JLabel label = new JLabel(icon);   
+//                imagePanel.add(label);
+//            } catch (IOException ex) {
+//                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        });  
+        } catch (IOException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
         
 
         
