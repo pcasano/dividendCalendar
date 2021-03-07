@@ -38,7 +38,7 @@ public class Company {
     private final String imagePath;
     private final JLabel label;
 
-    public JLabel getLabel() throws IOException {        
+    public JLabel getLabel() {        
         return label;
     }
 

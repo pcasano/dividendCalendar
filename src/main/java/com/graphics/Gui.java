@@ -56,6 +56,7 @@ public class Gui implements ActionListener{
     private JPanel imagePanel;
     private final int numberOfButtons;
     private final List<Company> listCompaniesForThisMonth;
+    private List<Company> listCompaniesDisplayed = new ArrayList<>();
     private Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
     
     
@@ -101,6 +102,7 @@ public class Gui implements ActionListener{
         List<JButton> listOfButtons = new ArrayList<>();
         for(int i=0;i<numberOfButtons;i++){
             button = new JButton(Integer.toString(i + 1)); 
+            button.setName(Integer.toString(i + 1));
             button.addActionListener(this);
             if(getListOfDividendDays(listCompaniesForThisMonth).contains(i + 1)){
                 button.setBackground(Color.green);
@@ -168,47 +170,33 @@ public class Gui implements ActionListener{
         double numberOfRowsDouble = listCompaniesForThisMonth.size()/4;
         int numberOfRowsInteger = (int)numberOfRowsDouble;      
         imagePanel.setLayout(new GridLayout(numberOfRowsInteger, 4, 0, 0));  
-        for(Company company:listCompaniesForThisMonth){
-            JLabel label = company.getLabel();            
-            imagePanel.add(label);
-            }              
+//        for(Company company:listCompaniesForThisMonth){
+//            JLabel label = company.getLabel();            
+//            imagePanel.add(label);
+//            }              
         }
+    
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        
-        try {
-            Company c = listCompaniesForThisMonth.get(0);
-            imagePanel.remove(c.getLabel());
-            mainPanel.revalidate();
-            mainPanel.repaint();
-            
-
-            
-//        double numberOfRowsDouble = listCompaniesForThisMonth.size()/4;
-//        int numberOfRowsInteger = (int)numberOfRowsDouble;
-//        imagePanel.setLayout(new GridLayout(numberOfRowsInteger, 4, 0, 0));  
-//        listCompaniesForThisMonth.forEach((company) -> {
-//            BufferedImage img;
-//            try {
-//                img = ImageIO.read(new File(company.getImagePath()));
-//                ImageIcon icon = new ImageIcon(img);
-//                JLabel label = new JLabel(icon);   
-//                imagePanel.add(label);
-//            } catch (IOException ex) {
-//                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        });  
-        } catch (IOException ex) {
-            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+    public void actionPerformed(ActionEvent e) {        
+        for(Company company:listCompaniesDisplayed){
+            imagePanel.remove(company.getLabel());
         }
-
-    }
-        
-
-        
-
-    
+        JButton clickedButton = (JButton)e.getSource();
+        int dayOfMonth = Integer.valueOf(clickedButton.getName());
+        List<Company> listOfCompaniesPayingToday = new ArrayList<>();
+        for(Company company:listCompaniesForThisMonth){
+            if(company.getDayOfMonth()==dayOfMonth){
+                listOfCompaniesPayingToday.add(company);
+            }
+        }        
+        for(Company company:listOfCompaniesPayingToday){
+            imagePanel.add(company.getLabel());
+        }            
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        listCompaniesDisplayed = new ArrayList<>(listOfCompaniesPayingToday);
+    }   
 }
 
 
