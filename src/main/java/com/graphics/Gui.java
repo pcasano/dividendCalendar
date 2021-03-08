@@ -35,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -49,10 +50,12 @@ public class Gui implements ActionListener{
     } 
     
     private Calendar calendar;
+    private JTextArea jTextArea;
     private JFrame frame;
-    private JPanel tableAndCalendarPanel;
+    private JPanel logAndCalendarPanel;
     private JPanel mainPanel;
     private JPanel calendarPanel;
+    private JPanel logPanel;
     private JPanel imagePanel;
     private final int numberOfButtons;
     private final List<Company> listCompaniesForThisMonth;
@@ -72,25 +75,29 @@ public class Gui implements ActionListener{
     
     private void createMainPanel(int numberOfButtons) throws IOException {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new FlowLayout(100));
-        //createCalendarPanel(numberOfButtons);
-        createPanelForTableAndCalendar(numberOfButtons);
-        mainPanel.add(calendarPanel);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        createPanelForLogAndCalendar(numberOfButtons);
+        mainPanel.add(logAndCalendarPanel);
         createImagePanel();
         mainPanel.add(imagePanel);
     }
     
-    private void createPanelForTableAndCalendar(int numberOfButtons){
-        tableAndCalendarPanel = new JPanel();
-        tableAndCalendarPanel.setLayout(new BoxLayout(tableAndCalendarPanel, BoxLayout.Y_AXIS));
+    private void createPanelForLogAndCalendar(int numberOfButtons){
+        logAndCalendarPanel = new JPanel();
+        logAndCalendarPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         createCalendarPanel(numberOfButtons);
-        createTablePanel();
-        tableAndCalendarPanel.add(calendarPanel);
-        //add table panel
+        createLogPanel();
+        logAndCalendarPanel.add(calendarPanel);
+        logAndCalendarPanel.add(logPanel);
     }
     
-    private void createTablePanel(){
-        //toDo
+    private void createLogPanel(){
+        logPanel = new JPanel();
+        logPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 50, 0));
+        //JTextArea jTextArea = new JTextArea(20,50);
+        jTextArea = new JTextArea(20,50);
+        jTextArea.setBackground(Color.WHITE);
+        logPanel.add(jTextArea);
     }
     
     private void createCalendarPanel(int numberOfButtons){
@@ -166,14 +173,8 @@ public class Gui implements ActionListener{
     }
     
     private void createImagePanel() throws IOException{
-        imagePanel = new JPanel();
-        double numberOfRowsDouble = listCompaniesForThisMonth.size()/4;
-        int numberOfRowsInteger = (int)numberOfRowsDouble;      
-        imagePanel.setLayout(new GridLayout(numberOfRowsInteger, 4, 0, 0));  
-//        for(Company company:listCompaniesForThisMonth){
-//            JLabel label = company.getLabel();            
-//            imagePanel.add(label);
-//            }              
+        imagePanel = new JPanel(); 
+        imagePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         }
     
 
@@ -192,6 +193,7 @@ public class Gui implements ActionListener{
         }        
         for(Company company:listOfCompaniesPayingToday){
             imagePanel.add(company.getLabel());
+            jTextArea.setText(company.getCompanyName());
         }            
         mainPanel.revalidate();
         mainPanel.repaint();
