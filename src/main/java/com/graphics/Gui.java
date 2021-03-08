@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -190,15 +191,29 @@ public class Gui implements ActionListener{
             if(company.getDayOfMonth()==dayOfMonth){
                 listOfCompaniesPayingToday.add(company);
             }
-        }        
+        }   
+        jTextArea.setText("");
         for(Company company:listOfCompaniesPayingToday){
-            imagePanel.add(company.getLabel());
-            jTextArea.setText(company.getCompanyName());
-        }            
+            imagePanel.add(company.getLabel());            
+        }  
+        jTextArea.setText(getLogText(listOfCompaniesPayingToday));
         mainPanel.revalidate();
         mainPanel.repaint();
         listCompaniesDisplayed = new ArrayList<>(listOfCompaniesPayingToday);
-    }   
+    }
+    
+    private String getLogText(List<Company> listOfCompanies){
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        StringBuilder sb = new StringBuilder();
+        for(Company company:listOfCompanies){
+            sb.append("- ")
+                .append(company.getCompanyName())
+                .append(" pays on ")
+                .append(format.format(company.getDividendPaymentDate().getTime()))
+                .append(System.getProperty("line.separator"));           
+        }
+        return sb.toString();
+    }
 }
 
 

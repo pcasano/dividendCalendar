@@ -28,7 +28,8 @@ public class Company {
         this.imagePath = "src\\main\\ressources\\images\\" + this.ticker + ".png";  
         BufferedImage img = ImageIO.read(new File(this.imagePath));
         ImageIcon icon = new ImageIcon(img);        
-        this.label = new JLabel(icon);         
+        this.label = new JLabel(icon);    
+        this.currency = stock.getCurrency();
     }
     
     private final String companyName;
@@ -37,7 +38,12 @@ public class Company {
     private final int dayOfMonth;
     private final String imagePath;
     private final JLabel label;
+    private final String currency;
 
+    public String getCurrency() {
+        return currency;
+    }    
+    
     public JLabel getLabel() {        
         return label;
     }
