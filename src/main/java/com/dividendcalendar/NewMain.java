@@ -39,7 +39,7 @@ public class NewMain{
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         
         JSONParser parser = new JSONParser();
-        Object object = parser.parse(new FileReader("src\\main\\ressources\\companies.json"));
+        Object object = parser.parse(new FileReader("src\\main\\resources\\companies.json"));
         JSONObject jsonObject = (JSONObject)object;      
         JSONArray companies = (JSONArray)jsonObject.get("companies");
         
