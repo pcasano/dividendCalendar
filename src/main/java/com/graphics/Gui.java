@@ -22,12 +22,15 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -58,6 +61,7 @@ public class Gui implements ActionListener{
     private JPanel calendarPanel;
     private JPanel logPanel;
     private JPanel imagePanel;
+    private JButton showAllCompaniesButton;
     private final int numberOfButtons;
     private final List<Company> listCompaniesForThisMonth;
     private List<Company> listCompaniesDisplayed = new ArrayList<>();
@@ -95,10 +99,11 @@ public class Gui implements ActionListener{
     private void createLogPanel(){
         logPanel = new JPanel();
         logPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 50, 0));
-        //JTextArea jTextArea = new JTextArea(20,50);
         jTextArea = new JTextArea(20,50);
         jTextArea.setBackground(Color.WHITE);
         logPanel.add(jTextArea);
+        this.createShowAllButton();
+        logPanel.add(showAllCompaniesButton);
     }
     
     private void createCalendarPanel(int numberOfButtons){
@@ -205,14 +210,43 @@ public class Gui implements ActionListener{
     private String getLogText(List<Company> listOfCompanies){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         StringBuilder sb = new StringBuilder();
+        sb.append(listOfCompanies.size())
+                    .append(" dividend(s) in total")
+                    .append(System.getProperty("line.separator"));
         for(Company company:listOfCompanies){
             sb.append("- ")
-                .append(company.getCompanyName())
-                .append(" pays on ")
-                .append(format.format(company.getDividendPaymentDate().getTime()))
-                .append(System.getProperty("line.separator"));           
+                    .append(company.getCompanyName())
+                    .append(" pays on ")
+                    .append(format.format(company.getDividendPaymentDate().getTime()))
+                    .append(System.getProperty("line.separator"));           
         }
         return sb.toString();
+    }
+    
+    private void createShowAllButton(){
+        showAllCompaniesButton = new JButton(new AbstractAction("Show all") {
+        @Override
+            public void actionPerformed( ActionEvent e ) {
+                for(Company company:listCompaniesDisplayed){
+                    imagePanel.remove(company.getLabel());
+                }        
+
+                Collections.sort(listCompaniesForThisMonth, new Comparator<Company>() {
+                    public int compare(Company c1, Company c2) {
+                    return c1.getDividendPaymentDate().compareTo(c2.getDividendPaymentDate());
+                    }
+                });         
+                
+                for(Company company:listCompaniesForThisMonth){
+                    imagePanel.add(company.getLabel()); 
+                }
+                jTextArea.setText("");
+                jTextArea.setText(getLogText(listCompaniesForThisMonth));
+                mainPanel.revalidate();
+                mainPanel.repaint();
+                listCompaniesDisplayed = new ArrayList<>(listCompaniesForThisMonth);            
+            }
+        });
     }
 }
 

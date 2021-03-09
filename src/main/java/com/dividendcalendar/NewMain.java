@@ -59,11 +59,6 @@ public class NewMain{
                 listCompaniesForThisMonth.add(company);
             }
         }
-
-
-        
-
-        
         Gui gui = new Gui(calendar, listCompaniesForThisMonth);
         gui.runGui();
 
