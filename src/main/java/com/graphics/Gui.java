@@ -38,6 +38,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
@@ -55,6 +56,7 @@ public class Gui implements ActionListener{
     
     private Calendar calendar;
     private JTextArea jTextArea;
+    private JScrollPane jScrollPane;
     private JFrame frame;
     private JPanel logAndCalendarPanel;
     private JPanel mainPanel;
@@ -101,7 +103,9 @@ public class Gui implements ActionListener{
         logPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 50, 0));
         jTextArea = new JTextArea(20,50);
         jTextArea.setBackground(Color.WHITE);
-        logPanel.add(jTextArea);
+        jScrollPane = new JScrollPane(jTextArea); 
+        logPanel.add(jScrollPane);
+        //logPanel.add(jTextArea);
         this.createShowAllButton();
         logPanel.add(showAllCompaniesButton);
     }
