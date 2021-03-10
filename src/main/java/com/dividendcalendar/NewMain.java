@@ -36,14 +36,11 @@ public class NewMain{
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
-        
+    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {        
         JSONParser parser = new JSONParser();
         Object object = parser.parse(new FileReader(NewMain.class.getResource("companies.json").getPath()));
         JSONObject jsonObject = (JSONObject)object;      
         JSONArray companies = (JSONArray)jsonObject.get("companies");
-        
-        
         
         List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
         Stock stock;
@@ -62,14 +59,6 @@ public class NewMain{
             }
         }
         Gui gui = new Gui(calendar, listCompaniesForThisMonth);
-        gui.runGui();
-
-        
-
-        
-
-               
-        
-    }
-    
+        gui.runGui();   
+    }    
 }
