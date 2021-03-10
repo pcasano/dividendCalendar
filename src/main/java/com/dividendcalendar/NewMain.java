@@ -8,9 +8,12 @@ package com.dividendcalendar;
 import com.graphics.Gui;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,10 +40,18 @@ public class NewMain{
      * @throws org.json.simple.parser.ParseException
      */
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {        
+//        JSONParser parser = new JSONParser();
+//        Object object = parser.parse(new FileReader(NewMain.class.getResource("companies.json").getPath()));
+//        JSONObject jsonObject = (JSONObject)object;      
+//        JSONArray companies = (JSONArray)jsonObject.get("companies");
+        
+        
+        InputStream inputStream = NewMain.class.getResourceAsStream("/companies.json");
         JSONParser parser = new JSONParser();
-        Object object = parser.parse(new FileReader(NewMain.class.getResource("companies.json").getPath()));
-        JSONObject jsonObject = (JSONObject)object;      
+        JSONObject jsonObject = (JSONObject)parser.parse(new InputStreamReader(inputStream, "UTF-8")); 
         JSONArray companies = (JSONArray)jsonObject.get("companies");
+             
+        
         
         List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
         Stock stock;
