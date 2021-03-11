@@ -46,7 +46,7 @@ public class NewMain{
 //        JSONArray companies = (JSONArray)jsonObject.get("companies");
         
         
-        InputStream inputStream = NewMain.class.getResourceAsStream("/companies.json");
+        InputStream inputStream = NewMain.class.getResourceAsStream("../companies.json");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject)parser.parse(new InputStreamReader(inputStream, "UTF-8")); 
         JSONArray companies = (JSONArray)jsonObject.get("companies");
