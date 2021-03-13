@@ -1,6 +1,9 @@
 {
     "companies": 
-        ["ALIZF",
+        ["ABBV",
+        "ACS.MC",
+        "ADM",
+        "ALIZF",
         "BABA",
         "BAS.DE",
         "BATS.L",
@@ -13,6 +16,7 @@
         "DEO", 
         "ENB",
         "GIS",
+        "IBE.MC",
         "IBM",
         "JNJ",
         "KHC",
@@ -24,6 +28,7 @@
         "O",
         "PEP",
         "PFE",
+        "REE.MC",
         "RB.L",
         "RDS-B",
         "SPG",
