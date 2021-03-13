@@ -52,7 +52,8 @@ public class Gui implements ActionListener{
     private JPanel mainPanel;
     private JPanel calendarPanel;
     private JPanel logPanel;
-    private JPanel imagePanel;
+    private JPanel imagePanel;    
+    private JPanel imagePanelSeparator;        
     private JPanel showButtonsPanel;
     private JButton showAllCompaniesButton;
     private JButton showPortfolioButton;
@@ -60,7 +61,7 @@ public class Gui implements ActionListener{
     private final List<Company> listCompaniesForThisMonth;
     private final List<Company> listCompaniesInPortfolio;
     private List<Company> listCompaniesDisplayed = new ArrayList<>();
-    private Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
     
     
     public void runGui() throws IOException{
@@ -79,7 +80,7 @@ public class Gui implements ActionListener{
         createPanelForLogAndCalendar(numberOfButtons);
         mainPanel.add(logAndCalendarPanel);
         createImagePanel();
-        mainPanel.add(imagePanel);
+        mainPanel.add(imagePanelSeparator);
     }
     
     private void createPanelForLogAndCalendar(int numberOfButtons){
@@ -89,6 +90,10 @@ public class Gui implements ActionListener{
         createLogPanel();
         logAndCalendarPanel.add(calendarPanel);
         logAndCalendarPanel.add(logPanel);
+        logAndCalendarPanel.setMaximumSize(new Dimension(
+                screenDimension.width,
+                screenDimension.height/2)
+        );
     }
     
     private void createLogPanel(){
@@ -104,8 +109,7 @@ public class Gui implements ActionListener{
     
     private void createShowCompanyButtons(){
         showButtonsPanel = new JPanel();
-        showButtonsPanel.setLayout(new BoxLayout(showButtonsPanel, BoxLayout.Y_AXIS));
-              
+        showButtonsPanel.setLayout(new BoxLayout(showButtonsPanel, BoxLayout.Y_AXIS));              
         this.createShowAllButton();
         this.createShowPortfolioButton();
         showButtonsPanel.add(showAllCompaniesButton);
@@ -188,6 +192,10 @@ public class Gui implements ActionListener{
     private void createImagePanel() throws IOException{
         imagePanel = new JPanel(); 
         imagePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        imagePanelSeparator = new JPanel(); 
+        imagePanelSeparator.setLayout(new BoxLayout(imagePanelSeparator, BoxLayout.Y_AXIS));
+        imagePanelSeparator.add(Box.createVerticalStrut(20));
+        imagePanelSeparator.add(imagePanel);
         }
     
 
