@@ -32,8 +32,7 @@ public class Company {
             this.dayOfMonth = stock.getDividend().getPayDate().get(Calendar.DAY_OF_MONTH);               
         }catch(NullPointerException e){
             this.dayOfMonth = -1;
-        }
-     
+        }     
     }
     
     private final String companyName;

@@ -239,7 +239,6 @@ public class Gui implements ActionListener{
     }
     
     private String getLogTextNoPaydates(List<Company> listOfCompanies){
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         StringBuilder sb = new StringBuilder();
         sb.append(listOfCompanies.size())
                     .append(" companies in total")
