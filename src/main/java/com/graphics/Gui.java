@@ -10,14 +10,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,20 +22,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.IIOException;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 /**
@@ -48,9 +37,10 @@ import javax.swing.JTextArea;
  */
 public class Gui implements ActionListener{
     
-    public Gui(Calendar calendar, List<Company> listCompaniesForThisMonth) {
+    public Gui(Calendar calendar, List<Company> listCompaniesForThisMonth, List<Company> listOfCompaniesInPortfolio) {
         this.numberOfButtons = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         this.listCompaniesForThisMonth = listCompaniesForThisMonth;
+        this.listCompaniesInPortfolio = listOfCompaniesInPortfolio;
         this.calendar = calendar;
     } 
     
@@ -63,9 +53,12 @@ public class Gui implements ActionListener{
     private JPanel calendarPanel;
     private JPanel logPanel;
     private JPanel imagePanel;
+    private JPanel showButtonsPanel;
     private JButton showAllCompaniesButton;
+    private JButton showPortfolioButton;
     private final int numberOfButtons;
     private final List<Company> listCompaniesForThisMonth;
+    private final List<Company> listCompaniesInPortfolio;
     private List<Company> listCompaniesDisplayed = new ArrayList<>();
     private Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -105,9 +98,19 @@ public class Gui implements ActionListener{
         jTextArea.setBackground(Color.WHITE);
         jScrollPane = new JScrollPane(jTextArea); 
         logPanel.add(jScrollPane);
-        //logPanel.add(jTextArea);
+        this.createShowCompanyButtons();
+        logPanel.add(showButtonsPanel);
+    }
+    
+    private void createShowCompanyButtons(){
+        showButtonsPanel = new JPanel();
+        showButtonsPanel.setLayout(new BoxLayout(showButtonsPanel, BoxLayout.Y_AXIS));
+              
         this.createShowAllButton();
-        logPanel.add(showAllCompaniesButton);
+        this.createShowPortfolioButton();
+        showButtonsPanel.add(showAllCompaniesButton);
+        showButtonsPanel.add(Box.createVerticalStrut(15));  
+        showButtonsPanel.add(showPortfolioButton);        
     }
     
     private void createCalendarPanel(int numberOfButtons){
@@ -252,6 +255,34 @@ public class Gui implements ActionListener{
             }
         });
     }
+    
+    private void createShowPortfolioButton(){
+        showPortfolioButton = new JButton(new AbstractAction("Show portfolio") {
+        @Override
+            public void actionPerformed( ActionEvent e ) {
+                for(Company company:listCompaniesDisplayed){
+                    imagePanel.remove(company.getLabel());
+                }        
+
+                Collections.sort(listCompaniesInPortfolio, new Comparator<Company>() {
+                    public int compare(Company c1, Company c2) {
+                    return c1.getDividendPaymentDate().compareTo(c2.getDividendPaymentDate());
+                    }
+                });         
+                
+                for(Company company:listCompaniesInPortfolio){
+                    imagePanel.add(company.getLabel()); 
+                }
+                jTextArea.setText("");
+                jTextArea.setText(getLogText(listCompaniesInPortfolio));
+                mainPanel.revalidate();
+                mainPanel.repaint();
+                listCompaniesDisplayed = new ArrayList<>(listCompaniesInPortfolio);            
+            }
+        });
+    }    
+    
 }
+
 
 

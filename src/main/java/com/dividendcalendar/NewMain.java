@@ -6,11 +6,7 @@
 package com.dividendcalendar;
 
 import com.graphics.Gui;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -51,8 +44,6 @@ public class NewMain{
         JSONObject jsonObject = (JSONObject)parser.parse(new InputStreamReader(inputStream, "UTF-8")); 
         JSONArray companies = (JSONArray)jsonObject.get("companies");
              
-        
-        
         List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
         Stock stock;
         for(Object objectCompany:companies){
@@ -69,7 +60,7 @@ public class NewMain{
                 listCompaniesForThisMonth.add(company);
             }
         }
-        Gui gui = new Gui(calendar, listCompaniesForThisMonth);
+        Gui gui = new Gui(calendar, listCompaniesForThisMonth, listOfCompaniesInPortfolio);
         gui.runGui();   
     }    
 }
