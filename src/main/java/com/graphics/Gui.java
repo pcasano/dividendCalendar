@@ -208,13 +208,13 @@ public class Gui implements ActionListener{
         for(Company company:listOfCompaniesPayingToday){
             imagePanel.add(company.getLabel());            
         }  
-        jTextArea.setText(getLogText(listOfCompaniesPayingToday));
+        jTextArea.setText(getLogTextWithPayDates(listOfCompaniesPayingToday));
         mainPanel.revalidate();
         mainPanel.repaint();
         listCompaniesDisplayed = new ArrayList<>(listOfCompaniesPayingToday);
     }
     
-    private String getLogText(List<Company> listOfCompanies){
+    private String getLogTextWithPayDates(List<Company> listOfCompanies){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         StringBuilder sb = new StringBuilder();
         sb.append(listOfCompanies.size())
@@ -226,6 +226,20 @@ public class Gui implements ActionListener{
                     .append(" pays on ")
                     .append(format.format(company.getDividendPaymentDate().getTime()))
                     .append(System.getProperty("line.separator"));           
+        }
+        return sb.toString();
+    }
+    
+    private String getLogTextNoPaydates(List<Company> listOfCompanies){
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        StringBuilder sb = new StringBuilder();
+        sb.append(listOfCompanies.size())
+                    .append(" companies in total")
+                    .append(System.getProperty("line.separator"));
+        for(Company company:listOfCompanies){
+            sb.append("- ")
+                    .append(company.getCompanyName())
+                    .append(System.getProperty("line.separator"));         
         }
         return sb.toString();
     }
@@ -248,7 +262,7 @@ public class Gui implements ActionListener{
                     imagePanel.add(company.getLabel()); 
                 }
                 jTextArea.setText("");
-                jTextArea.setText(getLogText(listCompaniesForThisMonth));
+                jTextArea.setText(getLogTextWithPayDates(listCompaniesForThisMonth));
                 mainPanel.revalidate();
                 mainPanel.repaint();
                 listCompaniesDisplayed = new ArrayList<>(listCompaniesForThisMonth);            
@@ -266,7 +280,7 @@ public class Gui implements ActionListener{
 
                 Collections.sort(listCompaniesInPortfolio, new Comparator<Company>() {
                     public int compare(Company c1, Company c2) {
-                    return c1.getDividendPaymentDate().compareTo(c2.getDividendPaymentDate());
+                    return c1.getTicker().compareTo(c2.getTicker());
                     }
                 });         
                 
@@ -274,7 +288,7 @@ public class Gui implements ActionListener{
                     imagePanel.add(company.getLabel()); 
                 }
                 jTextArea.setText("");
-                jTextArea.setText(getLogText(listCompaniesInPortfolio));
+                jTextArea.setText(getLogTextNoPaydates(listCompaniesInPortfolio));
                 mainPanel.revalidate();
                 mainPanel.repaint();
                 listCompaniesDisplayed = new ArrayList<>(listCompaniesInPortfolio);            

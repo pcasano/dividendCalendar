@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -53,9 +54,9 @@ public class NewMain{
         
         Calendar calendar = Calendar.getInstance(Locale.GERMANY);
         int currentMonth = calendar.get(Calendar.MONTH);
-        
+        List<Company> listCompaniesWithDividends = listOfCompaniesInPortfolio.stream().filter(a -> a.getDayOfMonth() != -1).collect(Collectors.toList());
         List<Company> listCompaniesForThisMonth = new ArrayList<>();
-        for(Company company:listOfCompaniesInPortfolio){
+        for(Company company:listCompaniesWithDividends){            
             if(company.getDividendPaymentDate().get(Calendar.MONTH) == currentMonth){
                 listCompaniesForThisMonth.add(company);
             }

@@ -23,26 +23,25 @@ public class Company {
     public Company(Stock stock) throws IOException {
         this.ticker = stock.getSymbol();
         this.companyName = stock.getName();
-        this.dividendPaymentDate = stock.getDividend().getPayDate();
-        this.dayOfMonth = stock.getDividend().getPayDate().get(Calendar.DAY_OF_MONTH);
         this.imagePath = getClass().getResource("../images/"+this.ticker+".png").getPath();
         BufferedImage img = ImageIO.read(new File(this.imagePath));
         ImageIcon icon = new ImageIcon(img);        
-        this.label = new JLabel(icon);    
-        this.currency = stock.getCurrency();
+        this.label = new JLabel(icon); 
+        try{
+            this.dividendPaymentDate = stock.getDividend().getPayDate();
+            this.dayOfMonth = stock.getDividend().getPayDate().get(Calendar.DAY_OF_MONTH);               
+        }catch(NullPointerException e){
+            this.dayOfMonth = -1;
+        }
+     
     }
     
     private final String companyName;
     private final String ticker;
-    private final Calendar dividendPaymentDate;
-    private final int dayOfMonth;
+    private Calendar dividendPaymentDate;
+    private int dayOfMonth;
     private final String imagePath;
-    private final JLabel label;
-    private final String currency;
-
-    public String getCurrency() {
-        return currency;
-    }    
+    private final JLabel label;    
     
     public JLabel getLabel() {        
         return label;
