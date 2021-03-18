@@ -5,9 +5,11 @@
  */
 package com.dividendcalendar;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -22,10 +24,10 @@ public class Company {
     
     public Company(Stock stock) throws IOException {
         this.ticker = stock.getSymbol();
-        this.companyName = stock.getName();
-        this.imagePath = getClass().getResource("../images/"+this.ticker+".png").getPath();
-        BufferedImage img = ImageIO.read(new File(this.imagePath));
-        ImageIcon icon = new ImageIcon(img);        
+        this.companyName = stock.getName();        
+        InputStream inputStream = NewMain.class.getResourceAsStream("/com/images/" + this.ticker+".png");
+        Image img = ImageIO.read(inputStream);
+        ImageIcon icon = new ImageIcon(img);                
         this.label = new JLabel(icon); 
         try{
             this.dividendPaymentDate = stock.getDividend().getPayDate();
@@ -39,15 +41,10 @@ public class Company {
     private final String ticker;
     private Calendar dividendPaymentDate;
     private int dayOfMonth;
-    private final String imagePath;
     private final JLabel label;    
     
     public JLabel getLabel() {        
         return label;
-    }
-
-    public String getImagePath() {
-        return imagePath;
     }
 
     public String getCompanyName() {

@@ -33,14 +33,8 @@ public class NewMain{
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {        
-//        JSONParser parser = new JSONParser();
-//        Object object = parser.parse(new FileReader(NewMain.class.getResource("companies.json").getPath()));
-//        JSONObject jsonObject = (JSONObject)object;      
-//        JSONArray companies = (JSONArray)jsonObject.get("companies");
-        
-        
-        InputStream inputStream = NewMain.class.getResourceAsStream("../companies.json");
+    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {                       
+        InputStream inputStream = NewMain.class.getResourceAsStream("/com/companies.json");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject)parser.parse(new InputStreamReader(inputStream, "UTF-8")); 
         JSONArray companies = (JSONArray)jsonObject.get("companies");
@@ -48,6 +42,7 @@ public class NewMain{
         List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
         Stock stock;
         for(Object objectCompany:companies){
+            System.out.println("..."+objectCompany.toString());
             stock = YahooFinance.get(objectCompany.toString());
             listOfCompaniesInPortfolio.add(new Company(stock));
         }
