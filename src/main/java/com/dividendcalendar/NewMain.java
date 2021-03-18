@@ -38,7 +38,11 @@ public class NewMain{
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject)parser.parse(new InputStreamReader(inputStream, "UTF-8")); 
         JSONArray companies = (JSONArray)jsonObject.get("companies");
-             
+            
+        
+        
+        
+        
         List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
         Stock stock;
         for(Object objectCompany:companies){
