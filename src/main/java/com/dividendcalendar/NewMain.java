@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -33,24 +34,21 @@ public class NewMain{
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
      */
+    private static final Logger LOG = Logger.getLogger(NewMain.class.getName());
+    
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {                       
         InputStream inputStream = NewMain.class.getResourceAsStream("/com/companies.json");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject)parser.parse(new InputStreamReader(inputStream, "UTF-8")); 
         JSONArray companies = (JSONArray)jsonObject.get("companies");
             
-        
-        
-        
-        
         List<Company> listOfCompaniesInPortfolio = new ArrayList<>();
         Stock stock;
         for(Object objectCompany:companies){
-            System.out.println("..."+objectCompany.toString());
+            LOG.info(objectCompany.toString() + " added");
             stock = YahooFinance.get(objectCompany.toString());
             listOfCompaniesInPortfolio.add(new Company(stock));
         }
-        
         Calendar calendar = Calendar.getInstance(Locale.GERMANY);
         int currentMonth = calendar.get(Calendar.MONTH);
         List<Company> listCompaniesWithDividends = listOfCompaniesInPortfolio.stream().filter(a -> a.getDayOfMonth() != -1).collect(Collectors.toList());
@@ -63,4 +61,5 @@ public class NewMain{
         Gui gui = new Gui(calendar, listCompaniesForThisMonth, listOfCompaniesInPortfolio);
         gui.runGui();   
     }    
+    
 }
