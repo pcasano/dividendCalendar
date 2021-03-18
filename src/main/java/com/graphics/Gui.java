@@ -71,7 +71,8 @@ public class Gui implements ActionListener{
         createMainPanel(numberOfButtons);
         frame.add(mainPanel);
         frame.setSize(screenDimension.width, screenDimension.height);
-        frame.setVisible(true);        
+        frame.setVisible(true); 
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     private void createMainPanel(int numberOfButtons) throws IOException {
