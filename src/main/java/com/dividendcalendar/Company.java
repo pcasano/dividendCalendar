@@ -5,7 +5,9 @@
  */
 package com.dividendcalendar;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
@@ -20,12 +22,15 @@ import yahoofinance.Stock;
  */
 public class Company {
     
+    private final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+    
     public Company(Stock stock) throws IOException {
         this.ticker = stock.getSymbol();
         this.companyName = stock.getName();        
         InputStream inputStream = NewMain.class.getResourceAsStream("/com/images/" + this.ticker+".png");
         Image img = ImageIO.read(inputStream);
-        ImageIcon icon = new ImageIcon(img);                
+        Image formattedImg = img.getScaledInstance(screenDimension.width/16, screenDimension.width/16, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(formattedImg);                
         this.label = new JLabel(icon); 
         try{
             this.dividendPaymentDate = stock.getDividend().getPayDate();
