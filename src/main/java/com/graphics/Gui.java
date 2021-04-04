@@ -101,7 +101,7 @@ public class Gui implements ActionListener{
     private void createLogPanel(){
         logPanel = new JPanel();
         logPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 50, 0));
-        jTextArea = new JTextArea(20,50);
+        jTextArea = new JTextArea(20,40);
         jTextArea.setBackground(Color.WHITE);
         jScrollPane = new JScrollPane(jTextArea); 
         logPanel.add(jScrollPane);
@@ -232,8 +232,8 @@ public class Gui implements ActionListener{
                     .append(System.getProperty("line.separator"));
         listOfCompanies.forEach((company) -> {
             sb.append("- ");
-            if(company.getCompanyName().length()>20){
-                sb.append(company.getCompanyName().substring(0, 20))
+            if(company.getCompanyName().length()>30){
+                sb.append(company.getCompanyName().substring(0, 30))
                   .append("...");                
             }
             else{
@@ -253,8 +253,8 @@ public class Gui implements ActionListener{
                     .append(System.getProperty("line.separator"));
         listOfCompanies.forEach((company) -> {
             sb.append("- ");
-            if(company.getCompanyName().length()>20){
-                sb.append(company.getCompanyName().substring(0, 20))
+            if(company.getCompanyName().length()>30){
+                sb.append(company.getCompanyName().substring(0, 30))
                   .append("...")
                   .append(System.getProperty("line.separator"));
             }
