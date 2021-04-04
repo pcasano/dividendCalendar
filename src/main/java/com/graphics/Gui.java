@@ -230,13 +230,19 @@ public class Gui implements ActionListener{
         sb.append(listOfCompanies.size())
                     .append(" dividend(s) in total")
                     .append(System.getProperty("line.separator"));
-        for(Company company:listOfCompanies){
-            sb.append("- ")
-                    .append(company.getCompanyName())
-                    .append(" pays on ")
-                    .append(format.format(company.getDividendPaymentDate().getTime()))
-                    .append(System.getProperty("line.separator"));           
-        }
+        listOfCompanies.forEach((company) -> {
+            sb.append("- ");
+            if(company.getCompanyName().length()>20){
+                sb.append(company.getCompanyName().substring(0, 20))
+                  .append("...");                
+            }
+            else{
+                sb.append(company.getCompanyName());                                 
+            }
+                sb.append(" pays on ")  
+                  .append(format.format(company.getDividendPaymentDate().getTime()))
+                  .append(System.getProperty("line.separator"));
+        });
         return sb.toString();
     }
     
@@ -245,11 +251,18 @@ public class Gui implements ActionListener{
         sb.append(listOfCompanies.size())
                     .append(" companies in total")
                     .append(System.getProperty("line.separator"));
-        for(Company company:listOfCompanies){
-            sb.append("- ")
-                    .append(company.getCompanyName())
-                    .append(System.getProperty("line.separator"));         
-        }
+        listOfCompanies.forEach((company) -> {
+            sb.append("- ");
+            if(company.getCompanyName().length()>20){
+                sb.append(company.getCompanyName().substring(0, 20))
+                  .append("...")
+                  .append(System.getProperty("line.separator"));
+            }
+            else{
+                sb.append(company.getCompanyName())
+                  .append(System.getProperty("line.separator"));
+            }              
+        });
         return sb.toString();
     }
     
@@ -286,13 +299,10 @@ public class Gui implements ActionListener{
                 for(Company company:listCompaniesDisplayed){
                     imagePanel.remove(company.getLabel());
                 }        
-
-                Collections.sort(listCompaniesInPortfolio, new Comparator<Company>() {
-                    public int compare(Company c1, Company c2) {
-                    return c1.getTicker().compareTo(c2.getTicker());
-                    }
-                });         
-                
+                Collections.sort(
+                        listCompaniesInPortfolio, 
+                        (Company c1, Company c2) -> c1.getTicker().compareTo(c2.getTicker())
+                );                                
                 for(Company company:listCompaniesInPortfolio){
                     imagePanel.add(company.getLabel()); 
                 }
