@@ -138,8 +138,7 @@ public class Gui implements ActionListener{
         else{
             calendarPanel.setLayout(new GridLayout(6, 7, 0, 0));
         }
-        
-        
+                
         setButtonsForDayNames(calendarPanel);
         synchronizeWeekDay(calendarPanel);
         JButton button;
