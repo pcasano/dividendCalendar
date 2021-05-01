@@ -121,7 +121,25 @@ public class Gui implements ActionListener{
     
     private void createCalendarPanel(int numberOfButtons){
         calendarPanel = new JPanel();
-        calendarPanel.setLayout(new GridLayout(6, 7, 0, 0));
+        int numberOdDays = this.calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        Calendar cal = Calendar.getInstance(Locale.GERMANY);
+        cal.set(Calendar.DAY_OF_MONTH, 1); 
+        int numberOfWhiteDays;
+        if(cal.get(Calendar.DAY_OF_WEEK) == 1){
+            numberOfWhiteDays = 6;
+        }
+        else{
+            numberOfWhiteDays = cal.get(Calendar.DAY_OF_WEEK) - 2;
+        }
+        float rows = (float)(numberOdDays + numberOfWhiteDays + 7)/7;
+        if(rows>6.0){
+            calendarPanel.setLayout(new GridLayout(7, 7, 0, 0));
+        }
+        else{
+            calendarPanel.setLayout(new GridLayout(6, 7, 0, 0));
+        }
+        
+        
         setButtonsForDayNames(calendarPanel);
         synchronizeWeekDay(calendarPanel);
         JButton button;
