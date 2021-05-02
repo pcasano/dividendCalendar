@@ -147,8 +147,12 @@ public class Gui implements ActionListener{
             button = new JButton(Integer.toString(i + 1)); 
             button.setName(Integer.toString(i + 1));
             button.addActionListener(this);
+
             if(getListOfDividendDays(listCompaniesForThisMonth).contains(i + 1)){
                 button.setBackground(Color.green);
+            }
+            if(isWeekend(i + 1)){
+                button.setEnabled(false);
             }            
             button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
             listOfButtons.add(button);                
@@ -158,27 +162,45 @@ public class Gui implements ActionListener{
         }        
     }
     
+    private boolean isWeekend(int day){
+        Calendar calendar = Calendar.getInstance(Locale.GERMANY);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        if(calendar.get(Calendar.DAY_OF_WEEK)==1 || calendar.get(Calendar.DAY_OF_WEEK)==7){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     private void setButtonsForDayNames(JPanel calendarPanel){
         JButton mondayButton = new JButton("Monday");
         mondayButton.setEnabled(false);
+        mondayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         JButton tuesdayButton = new JButton("Tuesday");
         tuesdayButton.setEnabled(false);
+        tuesdayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         JButton wednesdayButton = new JButton("Wednesday");
         wednesdayButton.setEnabled(false);
+        wednesdayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         JButton thursdayButton = new JButton("Thursday");
         thursdayButton.setEnabled(false);
+        thursdayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         JButton fridayButton = new JButton("Friday");
         fridayButton.setEnabled(false);
+        fridayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         JButton saturdayButton = new JButton("Saturday");
         saturdayButton.setEnabled(false);
+        saturdayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         JButton sundayButton = new JButton("Sunday");
         sundayButton.setEnabled(false);
+        sundayButton.setBackground(Color.LIGHT_GRAY);
         mondayButton.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/35));
         calendarPanel.add(mondayButton);
         calendarPanel.add(tuesdayButton);
@@ -196,6 +218,7 @@ public class Gui implements ActionListener{
         for(int i=1;i<today.get(Calendar.DAY_OF_WEEK)-1;i++){
             button = new JButton();
             button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
+            button.setEnabled(false);
             calendarPanel.add(button);
         }        
     }
