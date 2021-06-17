@@ -20,6 +20,7 @@
         "IBM",
         "JNJ",
         "KHC",
+		"KMB",
         "KO",
         "LMT",
         "MEURV.BR",
@@ -28,15 +29,14 @@
         "O",
         "PEP",
         "PFE",
-        "PM",
         "REE.MC",
+		"PM",
         "RKT.L",
         "RDS-B",
         "SPG",
         "TXN",
         "UL",
         "VIS.MC",
-        "XPEV",
         "XOM"
             ]
 }
