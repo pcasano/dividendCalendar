@@ -151,9 +151,11 @@ public class Gui implements ActionListener{
             if(getListOfDividendDays(listCompaniesForThisMonth).contains(i + 1)){
                 button.setBackground(Color.green);
             }
-            if(isWeekend(i + 1)){
-                button.setEnabled(false);
-            }            
+            else{
+                if(isWeekend(i + 1)){
+                    button.setEnabled(false);
+                }                 
+            }           
             button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
             listOfButtons.add(button);                
         }                
