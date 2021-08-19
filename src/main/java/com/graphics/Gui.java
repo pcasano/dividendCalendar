@@ -213,11 +213,21 @@ public class Gui implements ActionListener{
         calendarPanel.add(sundayButton);
     }
     
+    private int getNumberOfWhiteDaysToInsert(Calendar today){
+        if(today.get(Calendar.DAY_OF_WEEK)==1){
+            return 7;
+        }
+        else{
+            return today.get(Calendar.DAY_OF_WEEK) - 1;
+        }
+    }
+    
     private void synchronizeWeekDay(JPanel calendarPanel){
         Calendar today = Calendar.getInstance(Locale.GERMANY);
         today.set(Calendar.DAY_OF_MONTH, 1);        
         JButton button;
-        for(int i=1;i<today.get(Calendar.DAY_OF_WEEK)-1;i++){
+        int a = today.get(Calendar.DAY_OF_WEEK);
+        for(int i=1;i<this.getNumberOfWhiteDaysToInsert(today);i++){
             button = new JButton();
             button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
             button.setEnabled(false);
