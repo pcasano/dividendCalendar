@@ -32,7 +32,9 @@ public class NewMain{
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
      * @throws org.json.simple.parser.ParseException
-     */    
+     */  
+    
+    // Compile pom.xlm as clean compile assembly:single
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {                       
         InputStream inputStream = NewMain.class.getResourceAsStream("/com/companies.json");
         JSONParser parser = new JSONParser();
