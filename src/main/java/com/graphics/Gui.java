@@ -121,28 +121,29 @@ public class Gui implements ActionListener{
     
     private void createCalendarPanel(int numberOfButtons){
         calendarPanel = new JPanel();
-        int numberOdDays = this.calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int numberOfDays = this.calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Calendar cal = Calendar.getInstance(Locale.GERMANY);
         cal.set(Calendar.DAY_OF_MONTH, 1); 
         int numberOfWhiteDays;
+
         if(cal.get(Calendar.DAY_OF_WEEK) == 1){
             numberOfWhiteDays = 6;
         }
         else{
             numberOfWhiteDays = cal.get(Calendar.DAY_OF_WEEK) - 2;
         }
-        float rows = (float)(numberOdDays + numberOfWhiteDays + 7)/7;
+        float rows = (float)(numberOfDays + numberOfWhiteDays + 7)/7;
+        int formattedRows;
         if(rows>6.0){
-            calendarPanel.setLayout(new GridLayout(7, 7, 0, 0));
+            formattedRows = 7;
         }
         else{
-            calendarPanel.setLayout(new GridLayout(6, 7, 0, 0));
+            formattedRows = 6;
         }
-                
+        calendarPanel.setLayout(new GridLayout(formattedRows, 7, 0, 0));
         setButtonsForDayNames(calendarPanel);
         synchronizeWeekDay(calendarPanel);
         JButton button;
-        List<JButton> listOfButtons = new ArrayList<>();
         for(int i=0;i<numberOfButtons;i++){
             button = new JButton(Integer.toString(i + 1)); 
             button.setName(Integer.toString(i + 1));
@@ -157,11 +158,12 @@ public class Gui implements ActionListener{
                 }                 
             }           
             button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
-            listOfButtons.add(button);                
-        }                
-        for(JButton jButton:listOfButtons){
-            calendarPanel.add(jButton, BorderLayout.WEST);
-        }        
+            calendarPanel.add(button, BorderLayout.WEST);
+        }
+        addWhiteDaysAtEnd(
+                formattedRows * 7 - numberOfDays - numberOfWhiteDays - 7,
+                calendarPanel
+        );
     }
     
     private boolean isWeekend(int day){
@@ -226,13 +228,22 @@ public class Gui implements ActionListener{
         Calendar today = Calendar.getInstance(Locale.GERMANY);
         today.set(Calendar.DAY_OF_MONTH, 1);        
         JButton button;
-        int a = today.get(Calendar.DAY_OF_WEEK);
         for(int i=1;i<this.getNumberOfWhiteDaysToInsert(today);i++){
             button = new JButton();
             button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
             button.setEnabled(false);
             calendarPanel.add(button);
         }        
+    }
+
+    private void addWhiteDaysAtEnd(int daysToAdd, JPanel calendarPanel){
+        JButton button;
+        for(int i=0;i<daysToAdd;i++){
+            button = new JButton();
+            button.setPreferredSize(new Dimension(screenDimension.width/14, screenDimension.width/28));
+            button.setEnabled(false);
+            calendarPanel.add(button);
+        }
     }
     
     private List<Integer> getListOfDividendDays(List<Company> listOfCompanies){
