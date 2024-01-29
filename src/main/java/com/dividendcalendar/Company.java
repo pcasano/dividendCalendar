@@ -14,55 +14,39 @@ import java.util.Calendar;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import yahoofinance.Stock;
+
+import lombok.Getter;
 
 /**
  *
  * @author pablo
  */
+
+@Getter
 public class Company {
     
     private final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
     
-    public Company(Stock stock) throws IOException {
-        this.ticker = stock.getSymbol();
-        this.companyName = stock.getName();        
+    public Company(StockOverview stockOverview) throws IOException {
+        this.ticker = stockOverview.getTicker();
+        this.companyName = stockOverview.getCompanyName();
         InputStream inputStream = NewMain.class.getResourceAsStream("/com/images/" + this.ticker+".png");
         Image img = ImageIO.read(inputStream);
         Image formattedImg = img.getScaledInstance(screenDimension.width/16, screenDimension.width/16, Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(formattedImg);                
         this.label = new JLabel(icon); 
         try{
-            this.dividendPaymentDate = stock.getDividend().getPayDate();
-            this.dayOfMonth = stock.getDividend().getPayDate().get(Calendar.DAY_OF_MONTH);               
+            this.dividendPaymentDate = stockOverview.getDividendPaymentDate();
+            this.dayOfMonth = stockOverview.getDividendPaymentDate().get(Calendar.DAY_OF_MONTH);
         }catch(NullPointerException e){
             this.dayOfMonth = -1;
         }     
     }
-    
+
     private final String companyName;
     private final String ticker;
     private Calendar dividendPaymentDate;
     private int dayOfMonth;
-    private final JLabel label;    
-    
-    public JLabel getLabel() {        
-        return label;
-    }
+    private final JLabel label;
 
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-    
-    public Calendar getDividendPaymentDate() {
-        return dividendPaymentDate;
-    }
-
-    public int getDayOfMonth() {
-        return dayOfMonth;
-    }    
 }

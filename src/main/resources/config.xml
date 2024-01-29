@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<configuration>
+    <brokerData>
+        <baseUrl>https://gdcdyn.interactivebrokers.com/Universal/servlet/</baseUrl>
+        <token>142221100519959793118700</token>
+        <monthlyQueryId>620526</monthlyQueryId>
+        <apiVersion>3</apiVersion>
+    </brokerData>
+</configuration>
