@@ -57,7 +57,6 @@ public class NewMain{
 
         logger.info("-------------------- Application starts --------------------");
 
-        File file = new File("simple_bean.xml");
         InputStream configInputStream = NewMain.class.getResourceAsStream("/config.xml");
         XmlMapper xmlMapper = new XmlMapper();
         Configuration configuration  = xmlMapper.readValue(configInputStream, Configuration.class);
