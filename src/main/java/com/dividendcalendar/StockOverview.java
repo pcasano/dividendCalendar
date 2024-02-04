@@ -44,5 +44,6 @@ public class StockOverview {
 
     public StockOverview(String ticker) {
         this.ticker = ticker;
+        this.companyName = ticker;
     }
 }

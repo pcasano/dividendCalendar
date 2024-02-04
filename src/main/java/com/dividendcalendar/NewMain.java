@@ -89,7 +89,6 @@ public class NewMain{
 
         logger.info( "parsing data from IB response");
         XmlParser xmlParserForContent = new XmlParser(xmlStringForContent);
-        FlexStatement flexStatement = xmlParserForContent.getFlexStatement();
 
         List<OpenDividendAccrual> listOfOpenDividendAccrual = xmlParserForContent.getListOfOpenDividendAccrual();
         List<StatementOfFundsLine> listOfStatementOfFundsLine = xmlParserForContent.getListOfStatementOfFundsLine();
@@ -146,5 +145,4 @@ public class NewMain{
             return Integer.valueOf(month).equals(now.get(Calendar.MONTH)) && Integer.valueOf(year).equals(now.get(Calendar.YEAR));
         }).toList();
     }
-
 }

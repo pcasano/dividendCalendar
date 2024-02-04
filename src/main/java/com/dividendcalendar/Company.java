@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -23,6 +24,7 @@ import lombok.Getter;
  */
 
 @Getter
+@Setter
 public class Company {
     
     private final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,8 +45,8 @@ public class Company {
         }     
     }
 
-    private final String companyName;
-    private final String ticker;
+    private String companyName;
+    private String ticker;
     private Calendar dividendPaymentDate;
     private int dayOfMonth;
     private final JLabel label;
