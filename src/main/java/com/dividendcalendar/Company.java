@@ -30,7 +30,7 @@ public class Company {
     private final Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
     
     public Company(StockOverview stockOverview) throws IOException {
-        this.ticker = stockOverview.getTicker();
+        this.ticker = stockOverview.getTicker().trim().split("\\.")[0];
         this.companyName = stockOverview.getCompanyName();
         InputStream inputStream = NewMain.class.getResourceAsStream("/com/images/" + this.ticker+".png");
         Image img = ImageIO.read(inputStream);

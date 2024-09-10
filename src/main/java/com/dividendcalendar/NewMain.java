@@ -79,7 +79,7 @@ public class NewMain{
         TimeUnit.SECONDS.sleep(2);
         RequestSpecification requestForContent = RestAssured.given();
         logger.info( "retrieving data from IB");
-        Response responseForContent = requestForContent.queryParam("q", referenceCode)
+        Response responseForContent = RestAssured.given().queryParam("q", referenceCode)
                 .queryParam("t", configuration.getBrokerData().getToken())
                 .queryParam("v", configuration.getBrokerData().getApiVersion())
                 .get("FlexStatementService.GetStatement");
@@ -108,6 +108,7 @@ public class NewMain{
         }
         for(StatementOfFundsLine statementOfFundsLine: listOfDivsBase) {
             StockOverview stockOverview = new StockOverview(statementOfFundsLine);
+            logger.info(stockOverview.getCompanyName() + " - " + stockOverview.getTicker());
             listCompaniesForThisMonth.add(new Company(stockOverview));
         }
 
